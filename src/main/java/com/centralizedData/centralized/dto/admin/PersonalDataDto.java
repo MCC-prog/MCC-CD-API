@@ -1,0 +1,223 @@
+package com.centralizedData.centralized.dto.admin;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.centralizedData.centralized.model.admin.EdnQualification;
+import com.centralizedData.centralized.model.admin.StudentExtracurricular;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class PersonalDataDto implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4042646811303142842L;
+	
+	
+	private Set<EdnQualification> ednQualifications = new HashSet<EdnQualification>();
+	private ReligionSectionNewDto religionSection;
+	private long id;
+	private LanguageDto language;
+	private CasteNewDto caste;
+	private ReligionDto religion;
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private String dateOfBirth;
+	private String gender;
+	private String birthPlace;
+	private String birthState;
+	private String birthCountry;
+	private String bloodGroup;
+	private String passportNo;
+	private String residentPermitNo;
+	private String passportValidity;
+	private String residentPermitDate;
+	private Long passportCountry;
+	private String mobileNo1;
+	private String mobileNo2;
+	private String mobileNo3;
+	private String email;
+	//for single page appln added
+	private String confirmEmail;
+	private String phNo1;
+	private String phNo2;
+	private String phNo3;
+	private String citizenship;
+	private String residentCategory;
+	private String languageOthers;
+	private String createdBy;
+	private Instant createdDate;
+	private Integer modifiedBy;
+	private Instant lastModifiedDate;
+	private Integer admittedThroughId;
+	private String mobileNo;
+	private String landlineNo;
+	private String permanentAddressLine1;
+	private String permanentAddressLine2;
+	private String currentAddressLine1;
+	private String currentAddressLine2;
+	private String parentAddressLine1;
+	private String parentAddressLine2;
+	private String parentAddressLine3;
+	private String permanentAddressZipCode;
+	private String currentAddressZipCode;
+	private String parentAddressZipCode;
+	private String fatherName;
+	private String motherName;
+	private String fatherEducation;
+	private String motherEducation;
+	private String fatherEmail;
+	private String motherEmail;
+	private String parentPhone;
+	private String parentMobile;
+	private String stateOfBirth;
+	private String countryOfBirth;
+	private String passportIssuingCountry;
+	private String permanentDistrictName;
+	private String permanentTalukName;
+	private String permanentCityName;
+	private String permanentStateName;
+	private String permanentCountryName;
+	private String currentDistrictName;
+	private String currentTalukName;
+	private String currentCityName;
+	private String currentStateName;
+	private String currentCountryName;
+	private String parentCityName;
+	private String parentStateName;
+	private String parentCountryName;
+	private String guardianStateName;
+	private String guardianCountryName;
+	private String fatherIncome;
+	private String fatherOccupation;
+	private String fatherOccupationId;
+	private String motherIncome;
+	private String motherOccupation;
+	private String motherOccupationId;
+	private String ruralUrban;
+	private String parentPh1;
+	private String parentPh2;
+	private String parentPh3;
+	private String parentMob1;
+	private String parentMob2;
+	private String parentMob3;
+	private String nationality;
+	private String religionId;
+	private String subReligionId;
+	private String casteId;
+	private String nationalityOthers;
+	private String residentCategoryName;
+	private String religionName;
+	private String subregligionName;
+	private String casteCategory;
+	private String dob;
+	private String belongsTo;
+	private String areaType;
+	private String stateOthers;
+	private String permanentAddressStateOthers;
+	private String currentAddressStateOthers;
+	private String parentAddressStateOthers;
+	private String casteOthers;
+	private String religionOthers;
+	private String religionSectionOthers;
+	private String permanentStateId;
+	private long permanentCountryId;
+	private String currentStateId;
+	private long currentCountryId;
+	private String parentStateId;
+	private long parentCountryId;
+	private String fatherIncomeId;
+	private String motherIncomeId;
+	private String fatherCurrencyId;
+	private String motherCurrencyId;
+	private String fatherIncomeRange;
+	private String motherIncomeRange;
+	private String fatherCurrency;
+	private String motherCurrency;
+	private boolean sportsPerson;
+	private boolean handicapped;
+	private String guardianAddressLine1;
+	private String guardianAddressLine2;
+	private String guardianAddressLine3;
+	private String guardianPh1;
+	private String guardianPh2;
+	private String guardianPh3;
+	private String guardianMob1;
+	private String guardianMob2;
+	private String guardianMob3;
+	private long countryByGuardianAddressCountryId;	
+	private String stateByGuardianAddressStateId;
+	private String cityByGuardianAddressCityId;
+	private String guardianAddressZipCode;
+	private String guardianAddressStateOthers;
+	private String guardianAddressCountryOthers;
+	private String sportsDescription;
+	private String hadnicappedDescription;
+	
+	private String height;
+	private String weight;
+	private String languageByLanguageWrite;
+	private String languageByLanguageSpeak;
+	private String languageByLanguageRead;
+	private String motherTongue;
+	
+	private String trainingProgName;
+	private String trainingInstAddress;
+	private String trainingPurpose;
+	private String trainingDuration;
+	
+	private String courseKnownBy;
+	private String courseOptReason;
+	private String strength;
+	private String weakness;
+	private String otherAddnInfo;
+	
+	private String secondLanguage;
+	private Long secondLanguageId;
+	private String brotherName;
+	private String brotherEducation;
+	private String brotherIncome;
+	private String brotherOccupation;
+	private String brotherAge;
+	private String sisterName;
+	private String sisterEducation;
+	private String sisterIncome;
+	private String sisterOccupation;
+	private String sisterAge;
+	private String guardianName;
+	private String employeDesignation;
+	private String employeeDepartment;
+	private String workEmail;
+	private String rollNo;
+	private String registerNo;
+	private String studentClass;
+	
+	private List<StudentExtracurricular> studentExtracurriculars;
+	List<ExtracurricularActivityDto> studentExtracurricularsTos;
+	private String[] extracurricularIds;
+	private String extracurricularNames;
+	private String recommendedBy;
+	private boolean isRecommended;
+	private String subCaste;
+	private String universityEmail;
+	private String otherOccupationFather;
+	private String otherOccupationMother;
+	private String fatherTitle;
+	private String motherTitle;
+	private String motherTongueName;
+	private String aadhaarNo;
+	private String disabiltyPercentage;
+	private String permanentDisabilityNo;
+	private String secondLanguageStudied;
+
+}
