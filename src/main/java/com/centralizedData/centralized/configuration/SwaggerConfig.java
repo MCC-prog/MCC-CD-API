@@ -14,6 +14,7 @@ import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class SwaggerConfig {
+
 	 
 		@Bean
 		public OpenAPI custumConfig() {
@@ -37,6 +38,9 @@ public class SwaggerConfig {
 				}
 			};
 		}
+
+	
+	
 
 
 }

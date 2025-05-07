@@ -20,12 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.centralizedData.centralized.configuration.ExecutorServiceProvider;
 import com.centralizedData.centralized.handler.FileThreadHandler;
+
 import com.centralizedData.centralized.model.user.Role;
 import com.centralizedData.centralized.model.user.User;
 import com.centralizedData.centralized.repository.UserRepository;
 import com.centralizedData.centralized.security.jwt.JwtUserDetails;
-
-
 
 @Component
 @Service
@@ -77,6 +76,7 @@ public class CommonUtil {
 		return null;
 	}
 
+
 	public LocalDate convertStringToLocalDate(String dateStr) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		try {
@@ -105,5 +105,6 @@ public class CommonUtil {
 		}
 		return fileDetails;
 	}
+	
 
 }

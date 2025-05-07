@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.centralizedData.centralized.utils.ApiResponse;
-
 @RestControllerAdvice
 public class ExceptionHandlerDataNotFound {
 	
@@ -17,8 +15,5 @@ public class ExceptionHandlerDataNotFound {
 		return new ResponseEntity<ExceptionInfo>(exceptionInfo, HttpStatus.NOT_FOUND);
 		
 	}
-	
-	
-
 
 }

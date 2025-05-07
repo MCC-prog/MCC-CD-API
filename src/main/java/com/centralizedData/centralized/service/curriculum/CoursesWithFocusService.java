@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import javax.transaction.Transactional;
 
@@ -22,11 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.centralizedData.centralized.configuration.ExecutorServiceProvider;
 import com.centralizedData.centralized.dto.curriculum.CoursesWithFocusRequestDto;
 import com.centralizedData.centralized.dto.curriculum.CoursesWithFocusResponseDto;
 import com.centralizedData.centralized.exception.CustomException;
 import com.centralizedData.centralized.exception.ResourceNotFoundException;
-
+import com.centralizedData.centralized.handler.FileThreadHandler;
 import com.centralizedData.centralized.model.curriculum.CoursesWithFocus;
 import com.centralizedData.centralized.model.curriculum.CoursesWithFocusAssignedCourses;
 import com.centralizedData.centralized.model.curriculum.CoursesWithFocusDocuments;
@@ -81,7 +85,8 @@ public class CoursesWithFocusService {
 	@Autowired
 	private CoursesWithFocusDocumentsDao coursesWithFocusDocumentsDao;
 
-	
+
+	private ExecutorService executorService = ExecutorServiceProvider.getInstance().getExecutorService();
 
 	public CoursesWithFocusResponseDto saveCoursesWithFocus(CoursesWithFocusRequestDto dto) {
 		CoursesWithFocus coursesWithFocus = fromCoursesWithFocusRequestDto(dto);
@@ -182,7 +187,19 @@ public class CoursesWithFocusService {
 		return documents;
 	}
 
-	
+	public Map<String, String> getFileDetails(MultipartFile uploadedFile, String folderPath) {
+		Map<String, String> fileDetails = null;
+		if (uploadedFile != null && !uploadedFile.isEmpty() && folderPath != null) {
+			FileThreadHandler fileThreadHandler = new FileThreadHandler(uploadedFile, folderPath);
+			Future<Map<String, String>> future = executorService.submit(fileThreadHandler);
+			try {
+				fileDetails = future.get();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return fileDetails;
+	}
 
 	public Optional<CoursesWithFocusResponseDto> getCoursesWithFocusById(Long coursesWithFocusId) {
 		CoursesWithFocus coursesWithFocus = coursesWithFocusDao.findByIdAndIsActive(coursesWithFocusId, true);
@@ -194,6 +211,7 @@ public class CoursesWithFocusService {
 	public List<CoursesWithFocusResponseDto> getAllActiveCoursesWithFocus() {
 		List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.findByIsActive(true);
 		List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
+
 				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).collect(Collectors.toList());
 		return coursesWithFocusDtos;
 	}
@@ -202,6 +220,7 @@ public class CoursesWithFocusService {
 		List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.findByCreatedByAndIsActive(string, true);
 		List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
 				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).collect(Collectors.toList());
+
 		return coursesWithFocusDtos;
 	}
 
@@ -210,6 +229,7 @@ public class CoursesWithFocusService {
 		if (null != departmentId) {
 			List<Integer> userIds = userRepository.findUserIdsByDeptId(departmentId);
 			if (null != userIds && !userIds.isEmpty()) {
+
 				List<String> userIdsAsString = userIds.stream().map(String::valueOf).collect(Collectors.toList());
 				List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.getByCreatedIds(userIdsAsString);
 				List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
