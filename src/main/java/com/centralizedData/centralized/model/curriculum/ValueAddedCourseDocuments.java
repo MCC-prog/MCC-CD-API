@@ -1,0 +1,71 @@
+package com.centralizedData.centralized.model.curriculum;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity 
+@Table(name="ce_curriculum_value_added_course_document")
+public class ValueAddedCourseDocuments implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2955195097134709974L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long coursesWithFocusDocumentsId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "value_added_course_id", nullable = false)
+	private ValueAddedCourse valueAddedCourse;
+
+	@Column(name = "filename")
+	private String fileName;
+
+	@Column(name = "file_type")
+	private String fileType;
+
+	@Column(name = "file_size")
+	private Integer fileSize;
+
+	@Column(name = "doc_type")
+	private String docType;
+
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@Column(name = "created_date")
+	private LocalDate createdDate;
+
+	@Column(name = "modified_by")
+	private String modifiedBy;
+
+	@Column(name = "last_modified_date")
+	private LocalDateTime lastModifiedDate;
+
+	@Column(name = "is_active")
+	private Boolean isActive;
+
+}
