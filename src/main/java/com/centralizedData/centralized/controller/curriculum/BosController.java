@@ -35,7 +35,7 @@ import com.centralizedData.centralized.utils.ApiResponse;
 import com.centralizedData.centralized.utils.CommonUtil;
 
 import lombok.extern.slf4j.Slf4j;
-
+//arun
 @CrossOrigin(origins = "*")
 @RequestMapping("/bos")
 @RestController
