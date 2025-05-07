@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -161,7 +162,7 @@ public class BosService {
 
 	public List<BosResponseDto> getAllActiveBos() {
 		List<BosData> bosData = bosDataDao.findByIsActive(true);
-		List<BosResponseDto> coursesWithFocusDtos = bosData.stream().map(BosResponseDto::fromBosData).toList();
+		List<BosResponseDto> coursesWithFocusDtos = bosData.stream().map(BosResponseDto::fromBosData).collect(Collectors.toList());
 		return coursesWithFocusDtos;
 	}
 
