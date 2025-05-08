@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.centralizedData.centralized.dto.admin.AcademicYearDto;
 import com.centralizedData.centralized.dto.admin.CourseNewDto;
-import com.centralizedData.centralized.dto.admin.CourseSchemeDto;
 import com.centralizedData.centralized.dto.admin.CoursesDto;
 import com.centralizedData.centralized.dto.admin.DepartmentEntryDto;
 import com.centralizedData.centralized.dto.admin.ProgramDto;
 import com.centralizedData.centralized.dto.admin.ProgramTypeDto;
-import com.centralizedData.centralized.dto.admin.SubjectDto;
 import com.centralizedData.centralized.dto.admin.SubjectEntryDto;
 import com.centralizedData.centralized.exception.ResourceNotFoundException;
 import com.centralizedData.centralized.model.admin.AcademicYear;
@@ -34,14 +32,14 @@ import com.centralizedData.centralized.service.common.CommonService;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
+
+@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping({ "/", "/centralized/commonApi" })
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Slf4j
 public class CommonController {
 
 	private static final Logger log = LoggerFactory.getLogger(CommonController.class);

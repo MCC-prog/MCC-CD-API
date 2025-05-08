@@ -27,7 +27,10 @@ import com.centralizedData.centralized.security.jwt.JwtUserDetails;
 import com.centralizedData.centralized.service.user.UserService;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+
+@Tag(name = "Authentication", description = "Login and authentication APIs")
 @RestController
 @CrossOrigin(origins = "*", maxAge=3600)
 public class JwtAuthenticationRestController {

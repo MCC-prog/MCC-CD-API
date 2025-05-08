@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -79,9 +80,6 @@ public class BosService {
 	private CommonUtil commonUtil;
 
 	@Autowired
-	private CoursesWithFocusService CoursesWithFocusService;
-
-	@Autowired
 	private UserRepository userRepository;
 
 	public BosResponseDto saveCurriculumBos(BosRequestDto bosRequestDto) {
@@ -97,7 +95,7 @@ public class BosService {
 				.semType(dto.getSemType())
 				.semesterNo(dto.getSemesterNo())
 				.revisionPerc(Double.valueOf(dto.getPercentage()))
-				.dateOfConduct(commonUtil.convertToLocalDate(dto.getYearOfIntroduction()))
+				.dateOfConduct(commonUtil.convertStringToLocalDate(dto.getYearOfIntroduction()))
 				.user(userRepository.findById(Integer.parseInt
 						(commonUtil.getLoggedInUserDetails().getUserId().toString())).get())
 				.stream(streamRepository.findById(dto.getStreamId()).get())
@@ -124,7 +122,7 @@ public class BosService {
 	}
 
 	private BosDataDocuments saveBosFile(MultipartFile multiPartFile, String docType, BosData bosData) {
-		Map<String, String> file = CoursesWithFocusService.getFileDetails(multiPartFile, bosPath);
+		Map<String, String> file = commonUtil.getFileDetails(multiPartFile, bosPath);
 		BosDataDocuments documents = null;
 		if (null != file && !file.isEmpty()) {
 			documents = new BosDataDocuments();
@@ -161,7 +159,9 @@ public class BosService {
 
 	public List<BosResponseDto> getAllActiveBos() {
 		List<BosData> bosData = bosDataDao.findByIsActive(true);
-		List<BosResponseDto> coursesWithFocusDtos = bosData.stream().map(BosResponseDto::fromBosData).toList();
+		List<BosResponseDto> coursesWithFocusDtos = bosData.stream()
+				.map(BosResponseDto::fromBosData)
+				.collect(Collectors.toList());
 		return coursesWithFocusDtos;
 	}
 
@@ -170,10 +170,10 @@ public class BosService {
 		if (null != departmentId) {
 			List<Integer> userIds = userRepository.findUserIdsByDeptId(departmentId);
 			if (null != userIds && !userIds.isEmpty()) {
-				List<String> userIdsAsString = userIds.stream().map(String::valueOf).toList();
+				List<String> userIdsAsString = userIds.stream().map(String::valueOf).collect(Collectors.toList());
 				List<BosData> coursesWithFocus = bosDataDao.getByCreatedIds(userIdsAsString);
 				List<BosResponseDto> bosResponseDto = coursesWithFocus.stream().map(BosResponseDto::fromBosData)
-						.toList();
+						.collect(Collectors.toList());
 				return bosResponseDto;
 			}
 		}
@@ -182,7 +182,9 @@ public class BosService {
 
 	public List<BosResponseDto> getBosWithFocusByCreatedBy(String userId) {
 		List<BosData> coursesWithFocus = bosDataDao.findByCreatedByAndIsActive(userId, true);
-		List<BosResponseDto>  bosResponseDto = coursesWithFocus.stream().map(BosResponseDto::fromBosData).toList();
+		List<BosResponseDto>  bosResponseDto = coursesWithFocus.stream()
+				.map(BosResponseDto::fromBosData)
+				.collect(Collectors.toList());
 		return bosResponseDto;
 	}
 

@@ -1,13 +1,10 @@
 package com.centralizedData.centralized.dto.curriculum;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.centralizedData.centralized.model.curriculum.BosData;
-import com.centralizedData.centralized.model.curriculum.CoursesWithFocus;
+import com.centralizedData.centralized.utils.CommonUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -46,7 +43,7 @@ public class BosResponseDto {
 		responseDto.setAcademicYear(bosBO.getAcademicYear());
 		responseDto.setSemType(bosBO.getSemType());
 		responseDto.setSemesterNo(bosBO.getSemesterNo());
-
+		responseDto.setYearOfIntroduction(CommonUtil.convertLocalDateToString(bosBO.getDateOfConduct()));
 		responseDto.setPercentage(bosBO.getRevisionPerc() != null ? bosBO.getRevisionPerc().toString() : null);
 
 		if (bosBO.getStream() != null) {

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -83,6 +84,7 @@ public class CoursesWithFocusService {
 
 	@Autowired
 	private CoursesWithFocusDocumentsDao coursesWithFocusDocumentsDao;
+
 
 	private ExecutorService executorService = ExecutorServiceProvider.getInstance().getExecutorService();
 
@@ -169,7 +171,7 @@ public class CoursesWithFocusService {
 
 	private CoursesWithFocusDocuments saveCoursesWithFocusFile(MultipartFile multiPartFile, String docType,
 			CoursesWithFocus coursesWithFocus) {
-		Map<String, String> file = getFileDetails(multiPartFile, coursesFocusPath);
+		Map<String, String> file = commonUtil.getFileDetails(multiPartFile, coursesFocusPath);
 		CoursesWithFocusDocuments documents = null;
 		if (null != file && !file.isEmpty()) {
 			documents = new CoursesWithFocusDocuments();
@@ -209,14 +211,16 @@ public class CoursesWithFocusService {
 	public List<CoursesWithFocusResponseDto> getAllActiveCoursesWithFocus() {
 		List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.findByIsActive(true);
 		List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
-				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).toList();
+
+				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).collect(Collectors.toList());
 		return coursesWithFocusDtos;
 	}
 
 	public List<CoursesWithFocusResponseDto> getCoursesWithFocusByCreatedBy(String string) {
 		List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.findByCreatedByAndIsActive(string, true);
 		List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
-				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).toList();
+				.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).collect(Collectors.toList());
+
 		return coursesWithFocusDtos;
 	}
 
@@ -225,10 +229,11 @@ public class CoursesWithFocusService {
 		if (null != departmentId) {
 			List<Integer> userIds = userRepository.findUserIdsByDeptId(departmentId);
 			if (null != userIds && !userIds.isEmpty()) {
-				List<String> userIdsAsString = userIds.stream().map(String::valueOf).toList();
+
+				List<String> userIdsAsString = userIds.stream().map(String::valueOf).collect(Collectors.toList());
 				List<CoursesWithFocus> coursesWithFocus = coursesWithFocusDao.getByCreatedIds(userIdsAsString);
 				List<CoursesWithFocusResponseDto> coursesWithFocusDtos = coursesWithFocus.stream()
-						.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).toList();
+						.map(CoursesWithFocusResponseDto::fromCoursesWithFocus).collect(Collectors.toList());
 				return coursesWithFocusDtos;
 			}
 		}

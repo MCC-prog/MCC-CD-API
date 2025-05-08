@@ -57,6 +57,8 @@ public class BosController {
 		try {
 			BosResponseDto responseDto = bosService.saveCurriculumBos(bosRequestDto);
 			return ResponseEntity.ok(new ApiResponse<>("CurriculumBos added successfully.", responseDto));
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(new ApiResponse<>(e.getMessage(), null));
 		} catch (Exception e) {
 			log.error("Error saving CurriculumBos", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
